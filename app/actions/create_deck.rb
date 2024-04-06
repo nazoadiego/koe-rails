@@ -3,7 +3,7 @@ class CreateDeck
     @user = user
   end
 
-  def run
-    Deck.create(user: @user)
+  def run(name:)
+    Deck.create(user: @user, name: name)
   end
 end

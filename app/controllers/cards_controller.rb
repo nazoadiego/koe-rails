@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: %i[ show update destroy ]
+  before_action :set_card, only: %i[show schedule update destroy]
 
   # GET /cards
   def index
@@ -11,6 +11,18 @@ class CardsController < ApplicationController
   # GET /cards/1
   def show
     render json: @card
+  end
+
+  # POST /cards/1
+  def schedule
+    # validate that correct is true or false, also it may be a string
+    @card = ScheduleCard.new(current_user).run(@card, card_params[:correct])
+
+    if scheduled_card.save
+      render json: @card, status: :created, location: @card
+    else
+      render json: @card.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /cards
@@ -39,13 +51,14 @@ class CardsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_card
-      @card = Card.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def card_params
-      params.require(:card).permit(:name, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_card
+    @card = Card.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def card_params
+    params.require(:card).permit(:name, :user_id, :correct)
+  end
 end

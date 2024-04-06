@@ -2,10 +2,9 @@ class ScheduleCard
   def initialize(user)
     @user = user
   end
-  def run(card, correct)
-    card = correct ? mark_as_correct(card) : mark_as_incorrect(card)
 
-    card.save!
+  def run(card, correct)
+    correct ? mark_as_correct(card) : mark_as_incorrect(card)
   end
 
   private

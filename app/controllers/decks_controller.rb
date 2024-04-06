@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: %i[ show update destroy ]
+  before_action :set_deck, only: %i[show update destroy]
 
   # GET /decks
   def index
