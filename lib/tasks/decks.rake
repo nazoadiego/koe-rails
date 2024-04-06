@@ -5,12 +5,13 @@ namespace :decks do
     puts "Starting"
 
     user = User.last
-    string_notes = BassStringNotes::StandardTunning
-    value_objects = string_notes.map { |string| BassStringNotes.new(string) }
+    strings = BassStringNotes::StandardTunning
+    value_objects = strings.map { |string| BassStringNotes.new(string) }
 
     value_objects.each do |obj|
       deck = Deck.create(name: "#{obj.string} string", user: User.last)
-      AddCardsToDeckFromNotes.new(User.last).run(deck, obj.notes)
+      cards = obj.notes_as_cards(deck)
+      ImportCardsToDeck.new(User.last).run(deck, cards)
       puts "#{obj.string} string deck created"
     end
 

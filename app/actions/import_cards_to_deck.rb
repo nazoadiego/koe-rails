@@ -1,10 +1,9 @@
-class AddCardsToDeckFromNotes
+class ImportCardsToDeck
   def initialize(user)
     @user = user
   end
 
-  def run(deck, notes)
-    cards = CreateCardsFromNotes.new(@user).run(deck, notes)
+  def run(deck, cards)
     Card.transaction do
       Card.import! cards, validate: true
     end
