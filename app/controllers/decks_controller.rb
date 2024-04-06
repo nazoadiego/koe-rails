@@ -10,7 +10,14 @@ class DecksController < ApplicationController
 
   # GET /decks/1
   def show
-    render json: @deck
+    render json: { deck: @deck }
+  end
+
+  # GET /decks/1/review
+  def review
+    deck = Deck.includes(:cards).find(params[:id])
+
+    render json: { deck: deck, cards: deck.cards.due_today }
   end
 
   # POST /decks
@@ -39,13 +46,14 @@ class DecksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_deck
-      @deck = Deck.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def deck_params
-      params.require(:deck).permit(:name, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_deck
+    @deck = Deck.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def deck_params
+    params.require(:deck).permit(:name, :user_id)
+  end
 end

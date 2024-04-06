@@ -1,7 +1,10 @@
 class Card < ApplicationRecord
+  validates :due_date, inclusion: { in: (Date.today..) }
+
   belongs_to :deck
 
-  def review_today?
+  def self.due_today
+    where('due_date <= ?', Date.today.end_of_day)
   end
 
   def schedule

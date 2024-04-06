@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_12_210310) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_06_004530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_12_210310) do
     t.bigint "deck_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "key"
+    t.string "string"
+    t.integer "fret"
+    t.integer "review_interval", default: 1
+    t.float "ease_factor", default: 2.5
+    t.integer "consecutive_successes", default: 0
+    t.datetime "due_date", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["deck_id"], name: "index_cards_on_deck_id"
   end
 
