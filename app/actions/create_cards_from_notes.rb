@@ -3,7 +3,7 @@ class CreateCardsFromNotes
     @user = user
   end
 
-  def run(notes, deck)
+  def run(deck, notes)
     notes.map do |note|
       {
         name: note[:key],
