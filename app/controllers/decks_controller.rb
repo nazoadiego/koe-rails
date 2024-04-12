@@ -15,7 +15,7 @@ class DecksController < ApplicationController
 
   # GET /decks/1/review
   def review
-    deck = Deck.includes(:cards).find(params[:id])
+    deck = Deck.includes(:cards).find(review_deck_params[:deck_id])
 
     # TODO: sort by date, older due dates first
     render json: { deck: deck, cards: deck.cards.due_today }
@@ -53,6 +53,10 @@ class DecksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_deck
     @deck = Deck.find(params[:id])
+  end
+
+  def review_deck_params
+    params.permit(:deck_id)
   end
 
   # Only allow a list of trusted parameters through.
