@@ -1,3 +1,5 @@
+# TODO: set the due date
+
 class ScheduleCard
   def initialize(user)
     @user = user
@@ -13,6 +15,7 @@ class ScheduleCard
     card.consecutive_successes += 1
     # Increase review_interval more if the note has been consecutively correct
     card.review_interval *= card.consecutive_successes * card.ease_factor
+    card.due_date = card.due_date + card.review_interval.days
 
     card
   end

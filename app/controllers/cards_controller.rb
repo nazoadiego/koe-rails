@@ -13,12 +13,12 @@ class CardsController < ApplicationController
     render json: @card
   end
 
-  # POST /cards/1
+  # POST /cards/1/schedule
   def schedule
     # validate that correct is true or false, also it may be a string
     @card = ScheduleCard.new(current_user).run(@card, card_params[:correct])
 
-    if scheduled_card.save
+    if @card.save
       render json: @card, status: :created, location: @card
     else
       render json: @card.errors, status: :unprocessable_entity

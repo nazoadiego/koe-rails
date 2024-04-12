@@ -17,8 +17,11 @@ class DecksController < ApplicationController
   def review
     deck = Deck.includes(:cards).find(params[:id])
 
+    # TODO: sort by date, older due dates first
     render json: { deck: deck, cards: deck.cards.due_today }
   end
+
+  # TODO: Reset deck
 
   # POST /decks
   def create
